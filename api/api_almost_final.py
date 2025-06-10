@@ -60,8 +60,13 @@ def fetch_questions(category, difficulty, num_questions=10):
 
 # Αποθήκευση σωστών απαντήσεων σε JSON
 def save_sostes_apantiseis(questions, filename="sostes_apantiseis.json"):
-    #Δημιουργεί λίστα με τις σωστές απαντήσεις από τις ερωτήσεις
-    data = [{"question": q["question"], "correct_answer": q["correct_answer"]} for q in questions]
+    #Δημιουργεί λεξικό με αριθμημένες ερωτήσεις και τις σωστές απαντήσεις
+    data = {
+        f"question {i+1}": {
+            "question": q["question"],
+            "correct_answer": q["correct_answer"]
+        } for i, q in enumerate(questions)
+    }
     #Ανοίγει το αρχείο σε λειτουργία εγγραφής και αποθηκεύει τα δεδομένα σε μορφή JSON με κωδικοποίηση UTF8
     with open(filename, "w", encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
@@ -70,8 +75,13 @@ def save_sostes_apantiseis(questions, filename="sostes_apantiseis.json"):
 
 # Αποθήκευση λάθως απαντήσεων σε JSON
 def save_lathos_apantiseis(questions, filename="lathos_apantiseis.json"):
-    #Δημιουργεί λίστα με τις 3 λάθος απαντήσεις από τις ερωτήσεις
-    data = [{"question": q["question"], "incorrect_answers": q["incorrect_answers"]} for q in questions]
+    #Δημιουργεί λεξικό με αριθμημένες ερωτήσεις και τις 3 λάθος απαντήσεις
+    data = {
+        f"question {i+1}": {
+            "question": q["question"],
+            "incorrect_answers": q["incorrect_answers"]
+        } for i, q in enumerate(questions)
+    }
     #Ανοίγει το αρχείο σε λειτουργία εγγραφής και αποθηκεύει τα δεδομένα σε μορφή JSON με κωδικοποίηση UTF8
     with open(filename, "w", encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
